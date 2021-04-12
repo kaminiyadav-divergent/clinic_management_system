@@ -63,8 +63,8 @@ public class PatientCrudDao {
 		Statement st = null;
 		con = databaseManager.getConnection();
 		st = con.createStatement();
-		int z = st.executeUpdate("update patient set pname='" + pname + "', page=" + page + "'" + ",pcontact='"
-				+ pcontact + "',paddress='" + padress + "' where pid=" + pid);
+		int z = st.executeUpdate("update patient set pname='" + pname + "', page ='" + page + "',pcontact='"
+				+ pcontact + "',padress='" + padress + "' where pid= '" + pid+"'");
 		return z;
 	}
 

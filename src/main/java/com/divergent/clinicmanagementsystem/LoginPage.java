@@ -1,19 +1,22 @@
 package com.divergent.clinicmanagementsystem;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
+
 
 public class LoginPage {
 	static Scanner sc = new Scanner(System.in);
-
+	private static final Logger logger = Logger.getLogger("com.divergent.clinicmanagementsystem.LoginPage");
 	public static void main(String[] args) {
 
 		LoginPage.funtionalities();
+		
 	}
 
 	public static boolean funtionalities() {
 
 		while (true) {
-			System.out.println("\nWelcome To Clinic  Management System\n");
+			logger.info("\n-----Welcome To Clinic  Management System\n----");
 			System.out.println("press 1 for admin login:\n ");
 			System.out.println("press 2 for doctor login:\n ");
 			System.out.println("press 3 for exit:");
@@ -37,7 +40,7 @@ public class LoginPage {
 				System.exit(0);
 				break;
 			default:
-				System.out.print("Wrong Input: \n");
+				logger.info("----Wrong Input: ----\n");
 			}
 		}
 

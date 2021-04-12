@@ -30,7 +30,7 @@ public class DoctorCrudDao {
 		con = databaseManager.getConnection();
 		st = con.createStatement();
 
-		rs = st.executeQuery("select * from doctor");
+		rs = st.executeQuery("select * from doctordetails");
 		List<DoctorDto> doctorDtos = new ArrayList<>();
 		while (rs.next()) {
 
@@ -72,7 +72,7 @@ public class DoctorCrudDao {
 		Statement st = null;
 		con = databaseManager.getConnection();
 		st = con.createStatement();
-		int z = st.executeUpdate("delete from doctor where doc_id=" + y + "");
+		int z = st.executeUpdate("delete from doctordetails where did='" + y + "'");
 		return z;
 	}
 }

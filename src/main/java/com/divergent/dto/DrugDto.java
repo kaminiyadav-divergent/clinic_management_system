@@ -1,13 +1,14 @@
 package com.divergent.dto;
 
 public class DrugDto {
-	private String drugid, drugname, drugdesc;
+	int drugid;
+	private String drugname, drugdesc;
 
-	public String getDrugid() {
+	public int getDrugid() {
 		return drugid;
 	}
 
-	public void setDrugid(String drugid) {
+	public void setDrugid(int drugid) {
 		this.drugid = drugid;
 	}
 

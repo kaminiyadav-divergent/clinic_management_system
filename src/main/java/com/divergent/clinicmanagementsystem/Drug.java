@@ -1,28 +1,25 @@
 package com.divergent.clinicmanagementsystem;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import com.divergent.dao.DrugCrudDao;
 import com.divergent.dto.DrugDto;
 import com.divergent.jdbc.DatabaseManager;
 
 public class Drug {
-	static Connection con = null;
-	static Statement st = null;
-	static ResultSet rs = null;
+	
+	private static final Logger logger = Logger.getLogger("com.divergent.clinicmanagementsystem.Drug");
 	static Scanner sc = new Scanner(System.in);
 	Drug drug = new Drug();
 
 	public static void drugs() {
 
 		while (true) {
-			System.out.println("\nDrug CRUD operations\n");
+			logger.info("-----\nDrug CRUD operations\n-------");
 			System.out.println("press 1 for insert Drug record: \n");
 			System.out.println("press 2 for update Drug record: \n");
 			System.out.println("press 3 for delete Drug record: \n");
@@ -49,7 +46,7 @@ public class Drug {
 				System.exit(0);
 				break;
 			default:
-				System.out.print("Wrong Input: \n");
+				logger.warning("Wrong Input: \n");
 			}
 
 		}
@@ -62,12 +59,13 @@ public class Drug {
 			List<DrugDto> drugsDtos = dao.read();
 			System.out.printf("DrugID \t DrugName \t DrugDiscription\n");
 			for (DrugDto drugsDto : drugsDtos) {
-				System.out.printf("%10d\t|| %10s\t|| %10s ", drugsDto.getDrugid(), drugsDto.getDrugname(),
+				System.out.printf("%5d\t|  %15s\t|  %15s ", drugsDto.getDrugid(), drugsDto.getDrugname(),
 						drugsDto.getDrugdesc());
 				System.out.println("");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			logger.info(e.getMessage());
 		}
 
 	}
@@ -91,32 +89,41 @@ public class Drug {
 		DrugCrudDao dao = new DrugCrudDao(new DatabaseManager());
 		System.out.print("Enter the drug id which you want to update");
 		int id = sc.nextInt();
-		System.out.print("Enter drug name which you want to update");
-		String name = sc.next();
+		System.out.print("Enter drug name");
+		String name = sc.nextLine();
+		sc.nextLine();
+		System.out.print("Enter drug description");
+		String desc = sc.nextLine();
+		sc.nextLine();
 		try {
-			dao.update(name, name, name);
-			System.out.println("\n-------Value Has Updated-------");
+			dao.update(id, name, desc);
+			logger.info("\n------- Drugs Details Updated-------");
 		} catch (Exception e) {
-			System.out.println("\n-------Value Has Not Updated-------");
+			logger.info("\n------Drugs Details has Not Updated-------");
 		}
 	}
 
 	private static void insertDrug() {
 		DrugCrudDao dao = new DrugCrudDao(new DatabaseManager());
 
-		System.out.print("Enter Drug id: \n");
+		System.out.println("Enter Drug id: ");
 		int id = sc.nextInt();
+		sc.nextLine();
 
-		System.out.println("Enter Drug Name:\n");
-		String name = sc.next();
-		{
-			try {
-				dao.create(name, name, name);
-				System.out.println("\n-------Value Has Inserted-------");
-			} catch (Exception e) {
-				System.out.println("\n-------Value Has Not Inserted-------");
-			}
+		System.out.println("Enter Drug Name:");
+		String name = sc.nextLine();
+		
+
+		System.out.println("Enter Drug Description:");
+		String desc = sc.nextLine();
+
+		try {
+			dao.create(id, name, desc);
+			logger.info("\n-------Details Has Inserted-------");
+		} catch (Exception e) {
+			logger.info("\n-------Deatils Has Not Inserted-------");
 		}
+
 	}
 
 }

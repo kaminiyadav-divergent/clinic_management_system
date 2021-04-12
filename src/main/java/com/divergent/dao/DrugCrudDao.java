@@ -25,13 +25,12 @@ public class DrugCrudDao {
 		return st.executeUpdate("delete from labtest where labtest_id=" + a + "");
 	}
 
-	public int create(String drugid, String drugname, String drugdesc) throws SQLException {
+	public int create(int id, String drugname, String drugdesc) throws SQLException {
 		Connection con = null;
 		Statement st = null;
 		con = databaseManager.getConnection();
 		st = con.createStatement();
-		return st
-				.executeUpdate("insert into drugtable  values (" + drugid + ", '" + drugname + "','" + drugdesc + "')");
+		return st.executeUpdate("insert into drugtable  values ('" + id + "', '" + drugname + "','" + drugdesc + "')");
 	}
 
 	public List<DrugDto> read() throws SQLException {
@@ -44,7 +43,7 @@ public class DrugCrudDao {
 		List<DrugDto> list = new ArrayList<>();
 		while (rs.next()) {
 			DrugDto dto = new DrugDto();
-			dto.setDrugid(rs.getString(1));
+			dto.setDrugid(rs.getInt(1));
 			dto.setDrugname(rs.getString(2));
 			dto.setDrugdesc(rs.getString(3));
 			list.add(dto);
@@ -53,12 +52,12 @@ public class DrugCrudDao {
 
 	}
 
-	public int update(String id, String drugname, String drugdesc) throws SQLException {
+	public int update(int id, String drugname, String drugdesc) throws SQLException {
 		Connection con = null;
 		Statement st = null;
 		con = databaseManager.getConnection();
 		st = con.createStatement();
 		return st.executeUpdate(
-				"update labtest set drugname='" + drugname + "',drugdesc=" + drugdesc + " where drugid=" + id);
+				"update drugtable set drugname ='" + drugname + "', drugdesc='" + drugdesc + "' where drugid=" + id);
 	}
 }

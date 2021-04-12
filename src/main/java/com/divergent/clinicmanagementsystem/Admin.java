@@ -1,8 +1,11 @@
 package com.divergent.clinicmanagementsystem;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public class Admin {
+	private static final Logger logger = Logger.getLogger("com.divergent.clinicmanagementsystem.Admin");
 	static Scanner sc = new Scanner(System.in);
 	public static boolean adminPanel() {
 		
@@ -49,7 +52,7 @@ public class Admin {
 				break;
 
 			default:
-				System.out.print("Wrong Input: \n");
+				logger.warning("Wrong Input: \n");
 			}
 		}
 

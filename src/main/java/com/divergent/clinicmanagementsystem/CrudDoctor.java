@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import com.divergent.dao.DoctorCrudDao;
 import com.divergent.dto.DoctorDto;
@@ -17,8 +18,9 @@ public class CrudDoctor {
 	static ResultSet rs = null;
 	static Scanner sc = new Scanner(System.in);
 	CrudDoctor doctor = new CrudDoctor();
-
+	private static final Logger logger = Logger.getLogger("com.divergent.clinicmanagementsystem.CrudDoctor");
 	public static void cruddoctor() {
+		
 		System.out.print("Enter the choice");
 		do {
 			System.out.println("\nDoctor CRUD operations\n");
@@ -56,27 +58,29 @@ public class CrudDoctor {
 	}
 
 	private static void readDoctor() {
-		System.out.print("Display all patient records: \n");
+		System.out.println("Display all patient records: \n");
 
 		try {
 			DoctorCrudDao dao = new DoctorCrudDao(new DatabaseManager());
 			List<DoctorDto> dtos = dao.read();
 			System.out.printf(
-					"d_id          d_name \t       d_speaciality \t   d_degree \t        d_fees \n\n");
+					"docid          docname \t       d_speaciality \t      degree \t       fees \n\n");
 			for (DoctorDto doctorDto : dtos) {
-				System.out.printf("%s %30s %15s  %20s %20s  ", doctorDto.getDid(), doctorDto.getDname(),
+				System.out.printf("%5s %15s %15s  %15s %15s  ", doctorDto.getDid(), doctorDto.getDname(),
 						doctorDto.getDspeciality(), doctorDto.getDegree(), doctorDto.getDfees());
 				System.out.println("\n");
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
+			logger.info(e.getLocalizedMessage());
+			logger.warning(e.getMessage());
 		}
 
 	}
 
 	private static void updateDoctor() {
 		System.out.println("Enter the doctor id which you want to update");
-		String id = sc.nextLine();
+		int id = sc.nextInt();
 		System.out.print("Enter doctor name which you want to update");
 		String name = sc.next();
 		System.out.print("Enter the doctor specialization which you want to update");
@@ -88,9 +92,9 @@ public class CrudDoctor {
 		try {
 			DoctorCrudDao dao = new DoctorCrudDao(new DatabaseManager());
 			dao.update(fees, name, specialization, degree, fees);
-			System.out.println("\n-------Value  Updated-------");
+			logger.info("\n-------Value  Updated-------");
 		} catch (SQLException e) {
-			System.out.println("\n-------Value Not Updated-------");
+			logger.info("\n-------Value Not Updated-------");
 
 		}
 	}
@@ -100,11 +104,13 @@ public class CrudDoctor {
 			DoctorCrudDao dao = new DoctorCrudDao(new DatabaseManager());
 			System.out.println("Enter  the Doctor id  to delete --");
 			String a = sc.nextLine();
+			sc.next();
 			dao.delete(a);
-			System.out.print("\n----Doctor  Deleted --");
+			logger.info("\n----Doctor  Deleted --");
 		} catch (SQLException e) {
 			System.err.println(e);
-			System.out.print("\n----Doctor Not Deleted --");
+			logger.info("\n----Doctor Not Deleted --");
+			logger.warning(e.getMessage());
 		}
 	}
 

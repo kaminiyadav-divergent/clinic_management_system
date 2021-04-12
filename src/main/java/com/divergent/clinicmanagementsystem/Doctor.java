@@ -1,8 +1,10 @@
 package com.divergent.clinicmanagementsystem;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Doctor {
+	private static final Logger logger = Logger.getLogger("com.divergent.clinicmanagementsystem.Doctor");
 	static Scanner sc = new Scanner(System.in);
 	public static boolean doctoroperation() {
 
@@ -38,7 +40,7 @@ public class Doctor {
 				System.exit(0);
 				break;
 			default:
-				System.out.print("Wrong Input: \n");
+				logger.warning("Wrong Input:----- \n");
 			}
 		}
 	}
